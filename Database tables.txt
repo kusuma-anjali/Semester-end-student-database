@@ -1,0 +1,52 @@
+create table student(Stu_name varchar(40),USN varchar(10),mobile real,dob date,email varchar(40));
+commit;
+ALTER TABLE student ADD CONSTRAINT pk PRIMARY KEY (USN);
+ALTER TABLE student ADD password varchar(20);
+ALTER TABLE student RENAME COLUMN password TO pass;
+ALTER TABLE student ADD UNIQUE (pass);
+ALTER TABLE student DROP COLUMN dob;
+ALTER TABLE student ADD dob varchar(10);
+insert into student values('&stu_name','&USN',&mobile,'&email','&pass','&dob');
+update student set dob='04/09/1999' where USN='1BM17CS043'; 
+desc student;
+select * from student;
+commit;
+
+create table login(USN varchar(10),pass varchar(20),primary key(USN,pass) ,foreign key(USN) references student(USN),foreign key(pass) references student(pass));
+select * from login;
+insert into login values('&USN','&pass');
+desc login;
+commit;
+
+create table dept(dept_id varchar(10),dept_name varchar(20),fid varchar(10),primary key(dept_id));
+desc dept;
+
+create table cc(cc_id varchar(10),cc_name varchar(20),cc_credits integer,primary key(cc_id));
+insert into cc values('&cc_id','&cc_name',&cc_credits);
+select * from cc;
+desc cc;
+
+
+create table exam(USN varchar(10),see integer,cie integer,tmarks integer,grades varchar(1),primary key(USN),foreign key(USN) references student(USN));
+insert INTO exam values('1BM17CS043',47,47,47,'S');
+insert into exam values('&USN',&see,&cie,&tmarks,'&grades');
+
+
+create table result(USN varchar(10),cc_id varchar(10),cie integer,see integer,tmarks integer,grades varchar(1),PRIMARY KEY(USN,CC_ID));
+desc result;
+insert into result values('&USN','&cc_id',&cie,&see,&tmarks,'&grades');
+commit;
+select * from result ORDER BY USN;
+
+
+
+create table facultylogin(fid varchar(6),fname varchar(20),password varchar(10),primary key(fid));
+insert into facultylogin values('&fid','&fname','&password');
+SELECT * FROM facultylogin;
+desc facultylogin;
+
+create table faculty(USN varchar(10),Stu_name varchar(40),Linear_Algebra integer,OOPS_with_Java integer,DBMS integer,Operating_Systems integer,Data_Communication integer,primary key(USN));
+insert into faculty values('&USN','&Stu_name',&Linear_Algebra,&OOPS_with_Java,&DBMS,&Operating_Systems,&Data_Communication);
+SELECT * FROM FACULTY;
+commit;
+desc faculty;
